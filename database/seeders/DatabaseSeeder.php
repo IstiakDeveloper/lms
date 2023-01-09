@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Course;
+use App\Models\Curriculum;
 use App\Models\User;
+use App\Models\Lead;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -18,27 +21,56 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $user = new User();
-        $user->name = 'Super Admin';
-        $user->email = 'super@admin.com';
-        $user->password = bcrypt('password');
-        $user->save();
 
 
+        $this->create_user_with_role('Super Admin', 'Super Admin', 'super-admin@lms.com' );
+        $this->create_user_with_role('Communication', 'Communication Team', 'communication@lms.com' );
+       $teacher = $this->create_user_with_role('Teacher', 'Teacher', 'teacher@lms.com' );
+
+
+        // Create Leads
+        Lead::factory()->count(100)->create();
+
+        $course = Course::create([
+            'name' => 'Laravel',
+            'description' => 'Laravel is a web application framwork with expressive, elegent syntax. we',
+            'image' => 'https://cdn.pixabay.com/photo/2015/03/30/14/07/coding-699318__340.jpg',
+            'user_id' => $teacher->id,
+
+        ]);
+
+
+        Curriculum::factory()->count(10)->create();
+
+
+    }
+
+
+    private function create_user_with_role($type, $name, $email) {
         $role = Role::create([
-            'name' => 'Suprer Admin',
+            'name' => $type
         ]);
 
-        $permission = Permission::create([
-            'name' => 'create-admin'
+        $user = User::create([
+            'name' => $name,
+            'email' => $email,
+            'password' => bcrypt('password')
+
         ]);
 
-        $role->givePermissionTo($permission);
-        $permission->assignRole($role);
+        if($type == 'Super Admin'){
+            $permission = Permission::create([
+                'name' => 'create-admin'
+            ]);
+
+            $role->givePermissionTo($permission);
+
+        }
+
 
         $user->assignRole($role);
 
-
+        return $user;
 
     }
 }
