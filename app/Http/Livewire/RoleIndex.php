@@ -14,5 +14,14 @@ class RoleIndex extends Component
         return view('livewire.role-index', [
             'roles' => $roles
         ]);
+
+    }
+
+    public function roleDelete($id)
+    {
+        $role = Role::find($id);
+        $role->delete();
+
+        flash()->addSuccess('Role Deleted Successfully.');
     }
 }

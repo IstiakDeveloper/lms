@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Laravel is a web application framwork with expressive, elegent syntax. we',
             'image' => 'https://cdn.pixabay.com/photo/2015/03/30/14/07/coding-699318__340.jpg',
             'user_id' => $teacher->id,
+            'price' => 500,
 
         ]);
 

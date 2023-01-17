@@ -21,6 +21,10 @@
                             {{ __('Leads') }}
                         </x-nav-link>
                     @endcan
+
+                    <x-nav-link :href="route('admission')" :active="request()->routeIs('admission')">
+                        {{ __('Admission') }}
+                    </x-nav-link>
                 </div>
             </div>
 
