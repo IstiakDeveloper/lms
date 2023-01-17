@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        $defaultPermission = ['lead-managment', 'create-admin'];
+        $defaultPermission = ['lead-managment', 'create-admin', 'user-managment'];
         foreach( $defaultPermission as $permission) {
             Permission::create([ 'name' => $permission ]);
         }

@@ -44,6 +44,14 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
+                        {{-- User Management add --}}
+                        @can('user-managment')
+                            <x-dropdown-link :href="route('user.index')">
+                                {{ __('Users') }}
+                            </x-dropdown-link>
+                        @endcan
+
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
